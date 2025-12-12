@@ -58,7 +58,7 @@ static int partition(int *array, int little, int bigger, size_t size)
  * @bigger: Ending index of the partition
  * @size: Size of the array
  */
-void quick_sort_rec(int *array, int little, int bigger, size_t size)
+static void quick_sort_rec(int *array, int little, int bigger, size_t size)
 {
 	int pivot_index;
 
