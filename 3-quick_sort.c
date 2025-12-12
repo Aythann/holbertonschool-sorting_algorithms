@@ -50,13 +50,13 @@ static size_t partition(int *array, size_t little, size_t bigger, size_t size)
 }
 
 /**
- * quick_sort_rec - Recursively sorts partitions of the array
+ * recursive - Recursively sorts partitions of the array
  * @array: Array to be sorted
  * @little: Starting index of the partition
  * @bigger: Ending index of the partition
  * @size: Size of the array
  */
-static void quick_sort_rec(int *array, size_t little, size_t bigger, size_t size)
+static void recursive(int *array, size_t little, size_t bigger, size_t size)
 {
 	size_t pivot_index;
 
@@ -65,9 +65,9 @@ static void quick_sort_rec(int *array, size_t little, size_t bigger, size_t size
 		pivot_index = partition(array, little, bigger, size);
 
 		if (pivot_index > 0)
-			quick_sort_rec(array, little, pivot_index - 1, size);
+			recursive(array, little, pivot_index - 1, size);
 
-		quick_sort_rec(array, pivot_index + 1, bigger, size);
+		recursive(array, pivot_index + 1, bigger, size);
 	}
 }
 
@@ -82,5 +82,5 @@ void quick_sort(int *array, size_t size)
 	if (array == NULL || size < 2)
 		return;
 
-	quick_sort_rec(array, 0, size - 1, size);
+	recursive(array, 0, size - 1, size);
 }
