@@ -23,32 +23,30 @@ static void swap_int(int *a, int *b)
  *
  * Return: Final index of the pivot
  */
-static int partition(int *array, int little, int bigger, size_t size)
+static size_t partition(int *array, size_t little, size_t bigger, size_t size)
 {
-	int pivot = array[bigger];
-	int i = little - 1;
-	int j;
+	int pivot;
+	size_t i, j;
+
+	pivot = array[bigger];
+	i = little;
 
 	for (j = little; j < bigger; j++)
 	{
 		if (array[j] < pivot)
 		{
-			i++;
-			if (i != j)
-			{
-				swap_int(&array[i], &array[j]);
+			swap_int(&array[i], &array[j]);
+			if (array[i] != array[j])
 				print_array(array, size);
-			}
+			i++;
 		}
 	}
 
-	if (i + 1 != bigger)
-	{
-		swap_int(&array[i + 1], &array[bigger]);
+	swap_int(&array[i], &array[bigger]);
+	if (array[i] != array[bigger])
 		print_array(array, size);
-	}
 
-	return (i + 1);
+	return (i);
 }
 
 /**
@@ -58,21 +56,24 @@ static int partition(int *array, int little, int bigger, size_t size)
  * @bigger: Ending index of the partition
  * @size: Size of the array
  */
-static void quick_sort_rec(int *array, int little, int bigger, size_t size)
+static void quick_sort_rec(int *array, size_t little, size_t bigger, size_t size)
 {
-	int pivot_index;
+	size_t pivot_index;
 
 	if (little < bigger)
 	{
 		pivot_index = partition(array, little, bigger, size);
-		quick_sort_rec(array, little, pivot_index - 1, size);
+
+		if (pivot_index > 0)
+			quick_sort_rec(array, little, pivot_index - 1, size);
+
 		quick_sort_rec(array, pivot_index + 1, bigger, size);
 	}
 }
 
 /**
  * quick_sort - Sorts an array of integers in ascending order
- *              using the Quick sort algorithm
+ *              using the Quick sort algorithm (Lomuto scheme)
  * @array: Array to be sorted
  * @size: Size of the array
  */
